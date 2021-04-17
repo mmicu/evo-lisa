@@ -1,0 +1,4 @@
+flake8==3.8.4
+marshmallow==3.11.1
+mypy==0.812
+Pillow==8.2.0
