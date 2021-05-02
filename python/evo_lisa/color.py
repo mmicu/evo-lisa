@@ -3,9 +3,16 @@
 from random import randint
 from typing import Dict
 
-from evo_lisa.settings import PROBABILITY_UPDATE_RED_COLOR, PROBABILITY_UPDATE_GREEN_COLOR, \
-    PROBABILITY_UPDATE_BLUE_COLOR, PROBABILITY_UPDATE_ALPHA_LEVEL
-from evo_lisa.utils import apply_mutations, Mutation
+from evo_lisa.settings import (
+    PROBABILITY_UPDATE_RED_COLOR,
+    PROBABILITY_UPDATE_GREEN_COLOR,
+    PROBABILITY_UPDATE_BLUE_COLOR,
+    PROBABILITY_UPDATE_ALPHA_LEVEL,
+)
+from evo_lisa.utils import (
+    apply_mutations,
+    Mutation,
+)
 
 
 class RGBA:

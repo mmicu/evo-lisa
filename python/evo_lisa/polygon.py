@@ -5,9 +5,18 @@ from typing import List
 
 from evo_lisa.color import RGBA
 from evo_lisa.point import Point
-from evo_lisa.settings import MIN_POINTS_PER_POLYGON, PROBABILITY_REMOVE_POINT, PROBABILITY_ADD_POINT, \
-    MAX_POINTS_PER_POLYGON, MIN_ACTIVE_POINTS, MAX_ACTIVE_POINTS
-from evo_lisa.utils import apply_mutations, Mutation
+from evo_lisa.settings import (
+    MIN_POINTS_PER_POLYGON,
+    PROBABILITY_REMOVE_POINT,
+    PROBABILITY_ADD_POINT,
+    MAX_POINTS_PER_POLYGON,
+    MIN_ACTIVE_POINTS,
+    MAX_ACTIVE_POINTS,
+)
+from evo_lisa.utils import (
+    apply_mutations,
+    Mutation,
+)
 
 
 class Polygon:
@@ -24,11 +33,12 @@ class Polygon:
             next = self._points[index]
 
             point = Point(x=(prev.x + next.x) // 2, y=(prev.y + next.y) // 2)
-            self._points.append(point)
+            self._points.insert(index, point)
 
     def _remove_mutate(self, population_points: int) -> None:
         if len(self._points) > MIN_POINTS_PER_POLYGON and population_points > MIN_ACTIVE_POINTS:
-            del self._points[randint(0, len(self._points) - 1)]
+            index = randint(0, len(self._points) - 1)
+            del self._points[index]
 
     def mutate(self, max_width: int, max_height: int, population_points: int) -> bool:
         # Apply main mutation
@@ -64,13 +74,14 @@ class Polygon:
     def random(max_width: int, max_height: int) -> 'Polygon':
         origin = Point.random(max_width=max_width, max_height=max_height)
 
-        kx = (max_width * 10) // 100
-        ky = (max_height * 10) // 100
+        # TODO
+        #kx = (max_width * 10) // 100
+        #ky = (max_height * 10) // 100
+        kx = ky = 2
         points = []
         for _ in range(MIN_POINTS_PER_POLYGON):
-
-            x = min(max(0, origin._x + randint(-kx, +kx)), max_width)
-            y = min(max(0, origin._y + randint(-ky, +ky)), max_height)
+            x = min(max(0, origin.x + randint(-kx, +kx)), max_width)
+            y = min(max(0, origin.y + randint(-ky, +ky)), max_height)
 
             points.append(Point(x=x, y=y))
 

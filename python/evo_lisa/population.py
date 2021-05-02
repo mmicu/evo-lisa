@@ -3,11 +3,24 @@
 from random import randint
 from typing import List, Optional, Tuple
 
-from PIL import Image, ImageDraw
+from PIL import (
+    Image,
+    ImageDraw,
+)
 
 from evo_lisa.polygon import Polygon
-from evo_lisa.settings import MIN_POLYGONS, MAX_POLYGONS, PROBABILITY_ADD_POLYGON, PROBABILITY_REMOVE_POLYGON, PROBABILITY_MOVE_POLYGON
-from evo_lisa.utils import apply_mutations, g_logger, Mutation
+from evo_lisa.settings import (
+    MIN_POLYGONS,
+    MAX_POLYGONS,
+    PROBABILITY_ADD_POLYGON,
+    PROBABILITY_REMOVE_POLYGON,
+    PROBABILITY_MOVE_POLYGON,
+)
+from evo_lisa.utils import (
+    apply_mutations,
+    g_logger,
+    Mutation,
+)
 
 g_image_cache: List[List[Tuple[float, float, float, float]]] = []
 
@@ -42,11 +55,15 @@ class Population:
 
     def _add_mutate(self) -> None:
         if len(self._polygons) < MAX_POLYGONS:
-            self._polygons.append(Polygon.random(max_width=self._image_width, max_height=self._image_height))
+            new_polygon = Polygon.random(max_width=self._image_width, max_height=self._image_height)
+            index = randint(0, len(self._polygons))
+
+            self._polygons.insert(index, new_polygon)
 
     def _remove_mutate(self) -> None:
         if len(self._polygons) > MIN_POLYGONS:
-            del self._polygons[randint(0, len(self._polygons) - 1)]
+            index = randint(0, len(self._polygons) - 1)
+            del self._polygons[index]
 
     def _move_mutate(self) -> None:
         if len(self._polygons):
@@ -77,10 +94,14 @@ class Population:
         err = 0.0
         for i in range(self._image_width):
             for j in range(self._image_height):
-                r0, g0, b0, _ = g_image_cache[i][j]
-                r1, g1, b1, _ = generated_image.getpixel((i, j))  # type: ignore
+                r0, g0, b0, _ = generated_image.getpixel((i, j))  # type: ignore
+                r1, g1, b1, _ = g_image_cache[i][j]
 
-                err += abs(r1 - r0) + abs(g1 - g0) + abs(b1 - b0)
+                r = r0 - r1
+                g = g0 - g1
+                b = b0 - b1
+
+                err += r * r + g * g + b * b
 
         return err
 

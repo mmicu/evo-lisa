@@ -2,8 +2,15 @@
 # -*- coding: utf-8 -*-
 from random import randint
 
-from evo_lisa.settings import PROBABILITY_MOVE_MAX_POINT, PROBABILITY_MOVE_MID_POINT, PROBABILITY_MOVE_MIN_POINT
-from evo_lisa.utils import apply_mutations, Mutation
+from evo_lisa.settings import (
+    PROBABILITY_MOVE_MAX_POINT,
+    PROBABILITY_MOVE_MID_POINT,
+    PROBABILITY_MOVE_MIN_POINT,
+)
+from evo_lisa.utils import (
+    apply_mutations,
+    Mutation,
+)
 
 
 class Point:
@@ -23,8 +30,10 @@ class Point:
         self._y = min(max(0, self._y + randint(-ky, ky)), max_height)
 
     def _mutate_move_2(self, max_width: int, max_height: int) -> None:
-        kx = (max_width * 10) // 100
-        ky = (max_height * 10) // 100
+        # TODO
+        # kx = (max_width * 10) // 100
+        # ky = (max_height * 10) // 100
+        kx = ky = 2
 
         self._x = min(max(0, self._x + randint(-kx, kx)), max_width)
         self._y = min(max(0, self._y + randint(-ky, ky)), max_height)

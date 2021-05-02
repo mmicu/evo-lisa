@@ -2,12 +2,21 @@
 # -*- coding: utf-8 -*-
 from argparse import ArgumentParser, ArgumentTypeError
 from copy import deepcopy
+from datetime import timedelta
 from math import inf
 from os import listdir, path
+from time import time as current_time
 
-from evo_lisa.constants import DEFAULT_LOG_LEVEL, DEFAULT_NUM_GENERATIONS, LOG_LEVELS
+from evo_lisa.constants import (
+    DEFAULT_LOG_LEVEL,
+    DEFAULT_NUM_GENERATIONS,
+    LOG_LEVELS,
+)
 from evo_lisa.population import Population
-from evo_lisa.utils import init_logger, g_logger
+from evo_lisa.utils import (
+    init_logger,
+    g_logger,
+)
 
 
 def _existing_file(file_path: str) -> str:
@@ -67,8 +76,10 @@ def main() -> int:
         g_logger.error(f'Cannot initialize population. Reason: {str(be)}')
         return 1
 
+    start = current_time()
     error = inf
-    for generation in range(args.generations):
+    generation = selected = 0
+    while generation < args.generations:
         # Try to apply mutations
         new_population = deepcopy(population)
         mut_occurs = new_population.mutate()
@@ -76,12 +87,17 @@ def main() -> int:
             continue
 
         # Calculate error
+        generation += 1
         new_error = new_population.calculate_error()
         if new_error < error:
             error = new_error
             population = new_population
+            selected += 1
 
-            g_logger.debug(f'New error: {new_error} ({generation + 1}/{args.generations})')
+            g_logger.debug(f'New error: {new_error} ({generation + 1}/{args.generations}) - selected: {selected} - polygons: {len(population._polygons)}')
+
+    elapsed = str(timedelta(seconds=current_time() - start))
+    g_logger.debug(f'Elapsed: {elapsed}')
 
     # Draw result
     ok, err = population.draw(args.output_image_path)
