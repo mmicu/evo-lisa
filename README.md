@@ -1,9 +1,9 @@
 # evo-lisa
-Experimenting [genetic programming][gp-mona-lisa] and its implementation by using different programming languages.
+Experimenting [genetic programming][gp-mona-lisa] by using different programming languages.
 
 
 ## Implementations
-TODO
+- [Python](./python)
 
 
 ## Resources
