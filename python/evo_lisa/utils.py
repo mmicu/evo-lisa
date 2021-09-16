@@ -32,9 +32,7 @@ def init_logger(level: str) -> None:
 def will_mutate(probability: float) -> bool:
     assert 0 <= probability <= 1, f'{probability} not in [0, 1]'
 
-    res = choices(population=[True, False], weights=[probability, 1 - probability])
-
-    return res[0]
+    return choices(population=[True, False], weights=[probability, 1 - probability])[0]
 
 
 def apply_mutations(mutations: List[Mutation]) -> bool:

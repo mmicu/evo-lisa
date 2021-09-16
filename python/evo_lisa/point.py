@@ -25,16 +25,12 @@ class Point:
     def _mutate_move_1(self, max_width: int, max_height: int) -> None:
         kx = (max_width * 10) // 100
         ky = (max_height * 10) // 100
-
         self._x = min(max(0, self._x + randint(-kx, kx)), max_width)
         self._y = min(max(0, self._y + randint(-ky, ky)), max_height)
 
     def _mutate_move_2(self, max_width: int, max_height: int) -> None:
-        # TODO
-        # kx = (max_width * 10) // 100
-        # ky = (max_height * 10) // 100
-        kx = ky = 2
-
+        kx = (max_width * 2) // 100
+        ky = (max_height * 2) // 100
         self._x = min(max(0, self._x + randint(-kx, kx)), max_width)
         self._y = min(max(0, self._y + randint(-ky, ky)), max_height)
 

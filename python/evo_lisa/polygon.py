@@ -73,11 +73,8 @@ class Polygon:
     @staticmethod
     def random(max_width: int, max_height: int) -> 'Polygon':
         origin = Point.random(max_width=max_width, max_height=max_height)
-
-        # TODO
-        #kx = (max_width * 10) // 100
-        #ky = (max_height * 10) // 100
-        kx = ky = 2
+        kx = (max_width * 2) // 100
+        ky = (max_height * 2) // 100
         points = []
         for _ in range(MIN_POINTS_PER_POLYGON):
             x = min(max(0, origin.x + randint(-kx, +kx)), max_width)

@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from logging import log
 from random import randint
 from typing import List, Optional, Tuple
 
@@ -96,12 +97,7 @@ class Population:
             for j in range(self._image_height):
                 r0, g0, b0, _ = generated_image.getpixel((i, j))  # type: ignore
                 r1, g1, b1, _ = g_image_cache[i][j]
-
-                r = r0 - r1
-                g = g0 - g1
-                b = b0 - b1
-
-                err += r * r + g * g + b * b
+                err += abs(r0 - r1) + abs(g0 - g1) + abs(b0 - b1)
 
         return err
 
@@ -116,7 +112,7 @@ class Population:
         # Update counter of points in the entire population
         population_points = sum(len(polygon.points) for polygon in self._polygons)
 
-        # Apply mutation for each polygon
+        # Apply mutation to each polygon
         polygons_mut_occurs = False
         for polygon in self._polygons:
             has_mut = polygon.mutate(max_width=self._image_width, max_height=self._image_height, population_points=population_points)
@@ -127,7 +123,7 @@ class Population:
 
     def generate_image(self) -> object:
         mode = Population.IMAGE_MODE
-        image = Image.new(mode, (self._image_width, self._image_height))
+        image = Image.new(mode=mode, size=(self._image_width, self._image_height), color=(0, 0, 0))
         image_draw = ImageDraw.Draw(image, mode)
 
         for polygon in self._polygons:

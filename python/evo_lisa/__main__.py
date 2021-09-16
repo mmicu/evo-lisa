@@ -61,7 +61,7 @@ def _get_arguments_parser() -> ArgumentParser:
     return parser
 
 
-def main() -> int:
+def _main() -> int:
     # Parse command line arguments
     args = _get_arguments_parser().parse_args()
 
@@ -109,4 +109,4 @@ def main() -> int:
 
 
 if __name__ == '__main__':
-    exit(main())
+    exit(_main())

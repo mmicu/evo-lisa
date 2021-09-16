@@ -66,7 +66,7 @@ class RGBA:
 
     @staticmethod
     def random_alpha() -> int:
-        return randint(30, 60)
+        return randint(10, 60)
 
     @staticmethod
     def random() -> 'RGBA':
