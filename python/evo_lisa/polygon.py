@@ -3,9 +3,9 @@
 from random import randint
 from typing import List
 
-from evo_lisa.color import RGBA
+from evo_lisa.color import RGB
 from evo_lisa.point import Point
-from evo_lisa.settings import (
+from evo_lisa.constants import (
     MIN_POINTS_PER_POLYGON,
     PROBABILITY_REMOVE_POINT,
     PROBABILITY_ADD_POINT,
@@ -20,7 +20,7 @@ from evo_lisa.utils import (
 
 
 class Polygon:
-    def __init__(self, origin: Point, points: List[Point], color: RGBA) -> None:
+    def __init__(self, origin: Point, points: List[Point], color: RGB) -> None:
         self._origin = origin
         self._points = points
         self._color = color
@@ -67,7 +67,7 @@ class Polygon:
         return self._points
 
     @property
-    def color(self) -> RGBA:
+    def color(self) -> RGB:
         return self._color
 
     @staticmethod
@@ -82,4 +82,4 @@ class Polygon:
 
             points.append(Point(x=x, y=y))
 
-        return Polygon(origin=origin, points=points, color=RGBA.random())
+        return Polygon(origin=origin, points=points, color=RGB.random())
