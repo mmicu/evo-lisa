@@ -9,7 +9,7 @@ from time import time as current_time
 
 from evo_lisa.constants import (
     DEFAULT_LOG_LEVEL,
-    DEFAULT_NUM_GENERATIONS,
+    DEFAULT_ITERATIONS,
     LOG_LEVELS,
 )
 from evo_lisa.population import Population
@@ -55,8 +55,8 @@ def _get_arguments_parser() -> ArgumentParser:
     # Log level
     parser.add_argument('-l', '--log_level', type=str, choices=LOG_LEVELS, default=DEFAULT_LOG_LEVEL, help='log level.')
 
-    # Number of generations
-    parser.add_argument('-n', '--generations', type=int, default=DEFAULT_NUM_GENERATIONS, help='number of generations.')
+    # Number of iterations
+    parser.add_argument('-n', '--iterations', type=int, default=DEFAULT_ITERATIONS, help='number of iterations.')
 
     return parser
 
@@ -78,29 +78,30 @@ def _main() -> int:
 
     start = current_time()
     error = inf
-    generation = selected = 0
-    while generation < args.generations:
+    gen = selected_gen = 0
+    for iteration in range(1, args.iterations + 1):
         # Try to apply mutations
         new_population = deepcopy(population)
         mut_occurs = new_population.mutate()
         if not mut_occurs:
             continue
 
+        gen += 1
+
         # Calculate error
-        generation += 1
         new_error = new_population.calculate_error()
         if new_error < error:
             error = new_error
             population = new_population
-            selected += 1
+            selected_gen += 1
 
-            g_logger.debug(f'New error: {new_error} ({generation + 1}/{args.generations}) - selected: {selected} - polygons: {len(population._polygons)}')
+            g_logger.debug(f'New error: {new_error} - iteration: {iteration}/{args.iterations} - mutated generations: {gen} - selected: {selected_gen} - polygons: {len(population._polygons)}')
 
     elapsed = str(timedelta(seconds=current_time() - start))
     g_logger.debug(f'Elapsed: {elapsed}')
 
     # Draw result
-    ok, err = population.draw(args.output_image_path)
+    _, err = population.draw(args.output_image_path)
     if err:
         g_logger.error(f'Cannot draw population. Reason: {err}')
         return 1

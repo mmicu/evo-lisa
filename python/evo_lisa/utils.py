@@ -43,7 +43,6 @@ def apply_mutations(mutations: List[Mutation]) -> bool:
             if not mut_occurs:
                 mut_occurs = True
 
-            #g_logger.debug(mutation)
             mutation.function(**mutation.args)
 
     return mut_occurs

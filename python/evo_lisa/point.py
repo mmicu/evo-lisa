@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from random import randint
 
-from evo_lisa.settings import (
+from evo_lisa.constants import (
     PROBABILITY_MOVE_MAX_POINT,
     PROBABILITY_MOVE_MID_POINT,
     PROBABILITY_MOVE_MIN_POINT,

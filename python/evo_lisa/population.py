@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from logging import log
 from random import randint
 from typing import List, Optional, Tuple
 
@@ -10,8 +9,7 @@ from PIL import (
 )
 
 from evo_lisa.polygon import Polygon
-from evo_lisa.settings import (
-    MIN_POLYGONS,
+from evo_lisa.constants import (
     MAX_POLYGONS,
     PROBABILITY_ADD_POLYGON,
     PROBABILITY_REMOVE_POLYGON,
@@ -23,11 +21,11 @@ from evo_lisa.utils import (
     Mutation,
 )
 
-g_image_cache: List[List[Tuple[float, float, float, float]]] = []
+g_image_cache: List[List[Tuple[float, float, float]]] = []
 
 
 class Population:
-    IMAGE_MODE = 'RGBA'
+    IMAGE_MODE = 'RGB'
 
     def __init__(self, image_path: str, size: int) -> None:
         self._image_path = image_path
@@ -62,7 +60,7 @@ class Population:
             self._polygons.insert(index, new_polygon)
 
     def _remove_mutate(self) -> None:
-        if len(self._polygons) > MIN_POLYGONS:
+        if len(self._polygons):
             index = randint(0, len(self._polygons) - 1)
             del self._polygons[index]
 
@@ -95,9 +93,14 @@ class Population:
         err = 0.0
         for i in range(self._image_width):
             for j in range(self._image_height):
-                r0, g0, b0, _ = generated_image.getpixel((i, j))  # type: ignore
-                r1, g1, b1, _ = g_image_cache[i][j]
-                err += abs(r0 - r1) + abs(g0 - g1) + abs(b0 - b1)
+                r0, g0, b0 = generated_image.getpixel((i, j))  # type: ignore
+                r1, g1, b1 = g_image_cache[i][j]
+
+                r = r0 - r1
+                g = g0 - g1
+                b = b0 - b1
+
+                err += r * r + g * g + b * b
 
         return err
 
@@ -128,7 +131,7 @@ class Population:
 
         for polygon in self._polygons:
             points = [(p.x, p.y) for p in polygon.points]
-            image_draw.polygon(points, (polygon.color.r, polygon.color.g, polygon.color.b, polygon.color.a))
+            image_draw.polygon(points, (polygon.color.r, polygon.color.g, polygon.color.b))
 
         return image
 
