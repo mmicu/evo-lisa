@@ -4,13 +4,13 @@ from random import randint
 from typing import Dict
 
 from evo_lisa.constants import (
-    PROBABILITY_UPDATE_RED_COLOR,
-    PROBABILITY_UPDATE_GREEN_COLOR,
     PROBABILITY_UPDATE_BLUE_COLOR,
+    PROBABILITY_UPDATE_GREEN_COLOR,
+    PROBABILITY_UPDATE_RED_COLOR,
 )
 from evo_lisa.utils import (
-    apply_mutations,
     Mutation,
+    apply_mutations,
 )
 
 

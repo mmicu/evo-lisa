@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from argparse import ArgumentParser, ArgumentTypeError
+from argparse import (
+    ArgumentParser,
+    ArgumentTypeError,
+)
 from copy import deepcopy
 from datetime import timedelta
 from math import inf
@@ -8,14 +11,16 @@ from os import listdir, path
 from time import time as current_time
 
 from evo_lisa.constants import (
-    DEFAULT_LOG_LEVEL,
     DEFAULT_ITERATIONS,
+    DEFAULT_LOG_LEVEL,
     LOG_LEVELS,
 )
-from evo_lisa.population import Population
+from evo_lisa.population import (
+    Population,
+)
 from evo_lisa.utils import (
-    init_logger,
     g_logger,
+    init_logger,
 )
 
 

@@ -3,22 +3,19 @@
 from random import randint
 from typing import List, Optional, Tuple
 
-from PIL import (
-    Image,
-    ImageDraw,
-)
+from PIL import Image, ImageDraw
 
-from evo_lisa.polygon import Polygon
 from evo_lisa.constants import (
     MAX_POLYGONS,
     PROBABILITY_ADD_POLYGON,
-    PROBABILITY_REMOVE_POLYGON,
     PROBABILITY_MOVE_POLYGON,
+    PROBABILITY_REMOVE_POLYGON,
 )
+from evo_lisa.polygon import Polygon
 from evo_lisa.utils import (
+    Mutation,
     apply_mutations,
     g_logger,
-    Mutation,
 )
 
 g_image_cache: List[List[Tuple[float, float, float]]] = []

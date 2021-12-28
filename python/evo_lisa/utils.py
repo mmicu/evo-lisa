@@ -5,7 +5,9 @@ from collections import namedtuple
 from random import choices
 from typing import List
 
-from evo_lisa.constants import LOG_LEVELS
+from evo_lisa.constants import (
+    LOG_LEVELS,
+)
 
 Mutation = namedtuple('Mutation', ['function', 'args', 'probability'])
 g_logger = logging.getLogger('evo_lisa')

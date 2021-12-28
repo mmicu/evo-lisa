@@ -4,18 +4,18 @@ from random import randint
 from typing import List
 
 from evo_lisa.color import RGB
-from evo_lisa.point import Point
 from evo_lisa.constants import (
-    MIN_POINTS_PER_POLYGON,
-    PROBABILITY_REMOVE_POINT,
-    PROBABILITY_ADD_POINT,
+    MAX_ACTIVE_POINTS,
     MAX_POINTS_PER_POLYGON,
     MIN_ACTIVE_POINTS,
-    MAX_ACTIVE_POINTS,
+    MIN_POINTS_PER_POLYGON,
+    PROBABILITY_ADD_POINT,
+    PROBABILITY_REMOVE_POINT,
 )
+from evo_lisa.point import Point
 from evo_lisa.utils import (
-    apply_mutations,
     Mutation,
+    apply_mutations,
 )
 
 

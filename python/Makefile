@@ -8,5 +8,9 @@ linter:
 type-checker:
 	mypy
 
+.PHONY: sort-packages
+sort-packages:
+	isort .
+
 .PHONY: test
 test: linter type-checker

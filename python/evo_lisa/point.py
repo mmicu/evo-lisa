@@ -8,8 +8,8 @@ from evo_lisa.constants import (
     PROBABILITY_MOVE_MIN_POINT,
 )
 from evo_lisa.utils import (
-    apply_mutations,
     Mutation,
+    apply_mutations,
 )
 
 
