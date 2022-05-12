@@ -7,7 +7,7 @@ from argparse import (
 from copy import deepcopy
 from datetime import timedelta
 from math import inf
-from os import listdir, path
+from os import path
 from time import time as current_time
 
 from evo_lisa.constants import (
@@ -24,31 +24,22 @@ from evo_lisa.utils import (
 )
 
 
-def _existing_file(file_path: str) -> str:
-    if path.isfile(file_path):
-        return file_path
-
-    raise ArgumentTypeError(f'file "{file_path}" does not exist')
-
-
-def _writable_file(file_path: str) -> str:
-    try:
-        fd = open(file_path, 'w')
-        fd.close()
-
-        return file_path
-    except BaseException:
-        raise ArgumentTypeError(f'"{file_path}" is not a valid output location')
-
-
-def _empty_directory(dir_path: str) -> str:
-    if path.isdir(dir_path) and len(listdir(dir_path)):
-        raise ArgumentTypeError(f'directory "{dir_path}" is not empty')
-
-    return dir_path
-
-
 def _get_arguments_parser() -> ArgumentParser:
+    def _existing_file(file_path: str) -> str:
+        if path.isfile(file_path):
+            return file_path
+
+        raise ArgumentTypeError(f'file "{file_path}" does not exist')
+
+    def _writable_file(file_path: str) -> str:
+        try:
+            fd = open(file_path, 'w')
+            fd.close()
+
+            return file_path
+        except BaseException:
+            raise ArgumentTypeError(f'"{file_path}" is not a valid output location')
+
     parser = ArgumentParser()
 
     # Target image
@@ -100,7 +91,7 @@ def _main() -> int:
             population = new_population
             selected_gen += 1
 
-            g_logger.debug(f'New error: {new_error} - iteration: {iteration}/{args.iterations} - mutated generations: {gen} - selected: {selected_gen} - polygons: {len(population._polygons)}')
+            g_logger.debug(f'[{iteration}/{args.iterations}] error: {error} - mutated generations: {gen} - selected: {selected_gen} - polygons: {len(population._polygons)}')
 
     elapsed = str(timedelta(seconds=current_time() - start))
     g_logger.debug(f'Elapsed: {elapsed}')

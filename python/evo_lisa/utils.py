@@ -42,9 +42,7 @@ def apply_mutations(mutations: List[Mutation]) -> bool:
 
     for mutation in mutations:
         if will_mutate(mutation.probability):
-            if not mut_occurs:
-                mut_occurs = True
-
+            mut_occurs = True
             mutation.function(**mutation.args)
 
     return mut_occurs

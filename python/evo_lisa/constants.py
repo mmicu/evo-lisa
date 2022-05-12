@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-DEFAULT_LOG_LEVEL = 'INFO'
+DEFAULT_LOG_LEVEL = 'DEBUG'
 LOG_LEVELS = [
     'ERROR',
     'WARNING',
@@ -8,7 +8,7 @@ LOG_LEVELS = [
     'DEBUG',
 ]
 
-DEFAULT_ITERATIONS = 100_000
+DEFAULT_ITERATIONS = 10_000
 
 # Settings
 PROBABILITY_ADD_POLYGON = 1 / 700
